@@ -47,14 +47,16 @@ def write_students_information(students_list: list[Student]) -> int:
 
 
 def read_groups_information() -> set[str]:
+    groups_set = set()
     with open("groups.pickle", "rb") as read_groups:
-        groups = pickle.load(read_groups)
+        while True:
+            try:
+                groups = (pickle.load(read_groups))
+                groups_set.add(groups.specialty.name)
+            except EOFError:
+                break
 
-    groups_list = []
-    for groups_name in groups:
-        groups_list.append(groups_name.specialty.name)
-
-    return set(groups_list)
+    return groups_set
 
 
 def read_students_information() -> list[Student]:
